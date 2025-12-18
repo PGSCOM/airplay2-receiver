@@ -500,14 +500,14 @@ class Audio:
         if self.codec is not None:
             self.codecContext = av.codec.CodecContext.create(self.codec)
             self.codecContext.sample_rate = self.sample_rate
-            self.codecContext.channels = self.channel_count
+            self.codecContext.layout = 'mono' if self.channel_count == 1 else 'stereo'
             self.codecContext.format = av.AudioFormat('s' + str(self.sample_size) + 'p')
         if ed is not None:
             self.codecContext.extradata = ed
 
         self.resampler = av.AudioResampler(
             format=av.AudioFormat('s' + str(self.sample_size)).packed,
-            layout='stereo',
+            layout='mono' if self.channel_count == 1 else 'stereo',
             rate=self.sample_rate,
         )
 
