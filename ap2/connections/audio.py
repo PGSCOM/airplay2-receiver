@@ -507,7 +507,7 @@ class Audio:
 
         self.resampler = av.AudioResampler(
             format=av.AudioFormat('s' + str(self.sample_size)).packed,
-            layout='stereo',
+            layout='mono' if self.channel_count == 1 else 'stereo',
             rate=self.sample_rate,
         )
 
